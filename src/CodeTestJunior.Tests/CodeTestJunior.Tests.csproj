@@ -13,4 +13,14 @@
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CodeTestJunior.Library\CodeTestJunior.Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CodonTable.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
