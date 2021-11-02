@@ -12,7 +12,7 @@ In our case, we will define the start codon to be the most commonly used ATG (in
 
 - The objective of this coding challenge is to complete the implementation for the CodonTranslator class in the codonTranslator.cs file to translate the provided codon sequences into their corresponding proteins based on the mappings provided in the data file.  
 
-- Unit test have been provided in the CodonTranslatorTester.cs file.  Running the tests should give you an indication of the completeness of your solution. 
+- Unit tests have been provided in the CodonTranslatorTests.cs file.  Running the tests should give you an indication of the completeness of your solution. 
 
 - You will have 1.5 hours from the time you are given the instructions to complete the challenge.  You will need to create a pull request before the time has elapsed. 
 
@@ -25,7 +25,7 @@ The code for this challenge can be found at https://github.com/bwkennedy/CodeTes
 ### Included in this project
 
 1. CodonTranslator.cs - This is the code file for the CodonTranslator class you will need to complete
-2. CodonTranslatorTester.cs - This file includes completed unit tests for the CodonTranslator class
+2. CodonTranslatorTests.cs - This file includes completed unit tests for the CodonTranslator class
 3. CodonTable.csv - These are the data files that designate the start and stop codones, as well as the codon/protein mappings:
 
 ### Hints
