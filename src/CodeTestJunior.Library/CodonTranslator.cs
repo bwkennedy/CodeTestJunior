@@ -38,6 +38,7 @@ namespace CodonTestJunior.Library
 
     public class CodonTranslator
     {
+        private const string STOP = "Stop";
         private TranslationMap _translationMap;
 
         /// <summary>
@@ -56,7 +57,26 @@ namespace CodonTestJunior.Library
         /// <returns>Amino acid sequence</returns>
         public string Translate(string dna)
         {
-            return "";
+            //The map suggests there might be more than one start codon, but that would be a bigger project.
+            //So, I'm having to act with domain knowledge the map doesn't contain, which bothers me.
+            string aminoList = string.Empty;
+            int currentIndex = dna.IndexOf(_translationMap.Starts[0]);
+            while (currentIndex < dna.Length-1)
+            {
+                string result = TranslateNextCodon(dna, currentIndex);
+                if (result == STOP) break;
+                aminoList += result;
+                currentIndex += 3;
+            }
+            return aminoList;
+        }
+
+        public string TranslateNextCodon(string dna, int index){
+            //So many things could go wrong here. The substring call could overshoot the string array, the map
+            //could fail to contain a mapping for the codon. It feels error prone, but I'll have to leave it for now.
+            string codon = dna.Substring(index,3); //Get the next three nucleotides.
+            if (_translationMap.Stops.Contains(codon)) return STOP; //Check for a stop codon.
+            else return _translationMap.CodonMap[codon];
         }
     }
 }
