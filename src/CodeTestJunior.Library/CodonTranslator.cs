@@ -56,7 +56,54 @@ namespace CodonTestJunior.Library
         /// <returns>Amino acid sequence</returns>
         public string Translate(string dna)
         {
-            return "";
+            int startIdx = -1;
+            string codon;
+
+            // go one by one until a start codon is found
+            for (int i = 2; i < dna.Length; i++)
+            {
+                codon = dna.Substring(i - 2, 3);
+                if (_translationMap.Starts.Contains(codon))
+                {
+                    startIdx = i - 2;
+                    break;
+                }
+            }
+
+            // if no start codon was found, return empty
+            if (startIdx == -1)
+            {
+                return "";
+            }
+
+            // loop through each 3 char frame until stop point
+            string aminosOutput = "";
+            for (int i = startIdx; i < dna.Length - 3; i += 3)
+            {
+                // get codon
+                codon = dna.Substring(i, 3);
+
+                // check if stop codon
+                if (_translationMap.Stops.Contains(codon))
+                {
+                    // return everything up to the stop codon
+                    return aminosOutput;
+                }
+
+                // translate codon into amino acid
+                if (_translationMap.CodonMap.TryGetValue(codon, out string aminoAcid))
+                {
+                    aminosOutput += aminoAcid;
+                }
+                else
+                {
+                    // there was no translation found, so return empty?
+                    return "";
+                }
+            }
+
+            // this should not be hit, but just in case, return what was translated
+            return aminosOutput;
         }
     }
 }
