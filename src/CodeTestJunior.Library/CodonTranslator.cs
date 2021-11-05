@@ -56,7 +56,31 @@ namespace CodonTestJunior.Library
         /// <returns>Amino acid sequence</returns>
         public string Translate(string dna)
         {
-            return "";
+            string aminoAcidSequence = "";
+
+            int startIndex = dna.IndexOf(_translationMap.Starts[0]); // Start translating to amino acids at start of the one and only start symbol.
+            for (int i = startIndex; i < dna.Length; i += 3) // Each codon is length 3.
+            {
+                if (dna.Length - i < 3)
+                {
+                    break; // No more possible codons! Should break.
+                }
+
+                string codon = dna.Substring(i, 3);
+
+                if (_translationMap.Stops.Contains(codon))
+                {
+                    break; // This is one of the stop codons. Should break.
+                }
+
+                string aminoAcid;
+                if (_translationMap.CodonMap.TryGetValue(codon, out aminoAcid)) // Handling exceptions with "Try-" method.
+                {
+                    aminoAcidSequence += aminoAcid; // Yay! We found a match. Let's concatenate it.
+                }
+            }
+
+            return aminoAcidSequence; // All done!
         }
     }
 }
