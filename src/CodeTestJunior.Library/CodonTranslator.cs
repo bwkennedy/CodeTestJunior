@@ -1,5 +1,6 @@
 using CodonTestJunior.Builder;
 using CodonTestJunior.DataModel;
+using System.Collections.Generic;
 
 namespace CodonTestJunior.Library
 {
@@ -56,7 +57,70 @@ namespace CodonTestJunior.Library
         /// <returns>Amino acid sequence</returns>
         public string Translate(string dna)
         {
-            return "";
+            const int aminoLength = 3;
+            string dnaSequence = dna;
+            string aminoSequence = "";
+            string translatedSequence = "";
+            bool startSymFound = false;
+
+            //look for START key
+            for (int i = 0; i < dnaSequence.Length; i++)
+            {
+
+                //STOP?
+                if(
+                    _translationMap.Stops.Contains
+                        (
+                        aminoSequence = dnaSequence.Substring(i, aminoLength)
+                        )
+                    )
+                {
+                    return translatedSequence; //reached the STOP symbol
+                }
+
+                //START?
+                if (
+                    _translationMap.Starts.Contains
+                        (
+                        aminoSequence = dnaSequence.Substring(i, aminoLength)
+                        )
+
+                        && startSymFound == false
+                    )
+                {
+                    //found a START symbol
+                    translatedSequence += translateSequence(aminoSequence);
+                    i += aminoLength; //skip to next token
+                    startSymFound = true;
+                }
+
+
+                //TRANSLATE
+                if(startSymFound == true)
+                {
+                    aminoSequence = dnaSequence.Substring(i, aminoLength);
+                    translatedSequence += translateSequence(aminoSequence);
+                    i += (aminoLength - 1); //skip to next token (minus 1 to offset the i++ as it loops)
+                }
+
+                if ( i >= dnaSequence.Length)
+                {
+                    return translatedSequence; //reached end of sequence, no START symbol found
+                }
+            }
+
+            return translatedSequence;
+
+
         }
+
+        public string translateSequence(string key)
+        {
+            if(_translationMap.CodonMap.TryGetValue(key, out string value)){
+                return value;
+            }
+            else { return ""; }
+        }
+
     }
 }
