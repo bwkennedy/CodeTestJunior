@@ -1,5 +1,6 @@
 using CodonTestJunior.Builder;
 using CodonTestJunior.DataModel;
+using System;
 
 namespace CodonTestJunior.Library
 {
@@ -56,7 +57,61 @@ namespace CodonTestJunior.Library
         /// <returns>Amino acid sequence</returns>
         public string Translate(string dna)
         {
-            return "";
+            var proteinSequence = "";
+            var start = "ATG";
+            var stop1 = "TAG";
+            var stop2 = "TGA";
+            var stop3 = "TAA";
+            char[] frame = new char[];
+
+
+            
+            // Search for the start codon (ATG).
+            var start_loc = dna.IndexOf(start);
+
+            // Search for one of the stop codons.
+            var stop1_loc = dna.IndexOf(stop1);
+            var stop2_loc =dna.IndexOf(stop2);
+            var stop3_loc =dna.IndexOf(stop3);
+
+            var stop_loc;
+            // Search for the stop codon location.
+            // **NOTE** If multiple stops exist, this could be buggy.
+            if (stop1_loc > stop2_loc)
+            {
+                if (stop1_loc > stop3_loc)
+                {
+                    stop_loc = stop1_loc;
+                }
+                else
+                {
+                    stop_loc = stop3_loc;
+                }
+            }
+            else if (stop2_loc > stop3_loc)
+            {
+                stop_loc = stop2_loc;
+            }
+            else
+            {
+                stop_loc = stop3_loc;
+            }
+
+            // Once start and stop locations are identified, break into sets of codons (maybe stored as an array for each codon?)
+            // Loop through from start to stop and make a new array that excludes anything outside the start and stop.
+            for (int i = start_loc; i <= stop_loc; i++)
+            {
+                
+            }
+
+            // Query the CSV file to find the name of the codon
+
+            // Make a new array for the protein abbreviations.
+
+            // Turn protein array into a string.
+
+            // Return the corresponding protein string
+            return proteinSequence;
         }
     }
 }
